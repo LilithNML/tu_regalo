@@ -1,9 +1,3 @@
-/**
- * modules/data.js
- * Base de datos de cartas, logros y herramientas.
- * Contenido limpio: Texto plano sin etiquetas HTML para mejor renderizado.
- */
-
 export const mensajes = {
   "noviembre9": {
     type: "text",
@@ -1703,50 +1697,3 @@ export const mensajes = {
     pista: "El señor de la noche."
   },
 };
-
-export const logros = [
-  {
-    id: "primer_paso",
-    codigo_requerido: 1,
-    mensaje: "¡Primer paso desbloqueado! Hay muchos más esperándote.",
-  },
-  {
-    id: "cinco_secretos",
-    codigo_requerido: 5,
-    mensaje: "¡Cinco secretos revelados! Eres una gran exploradora.",
-  },
-  {
-    id: "diez_secretos",
-    codigo_requerido: 10,
-    mensaje: "¡10 Secretos! Tu curiosidad no tiene límites.",
-  },
-  {
-    id: "veinte_secretos",
-    codigo_requerido: 20,
-    mensaje: "¡20 Secretos! Estás descubriendo todo mi mundo.",
-  },
-  {
-    id: "mitad_camino",
-    codigo_requerido: 40,
-    mensaje: "¡Vas increíble! Tantos recuerdos desbloqueados...",
-  },
-  {
-    id: "casi_todo",
-    codigo_requerido: 70,
-    mensaje: "¡Wow! Eres experta en descubrir mis secretos.",
-  },
-  {
-    id: "todos_los_secretos",
-    codigo_requerido: Object.keys(mensajes).length,
-    mensaje: "¡Todos los secretos desbloqueados! Eres mi todo.",
-  }
-];
-
-export const herramientasExternas = [
-  {
-    nombre: "Desencriptar",
-    descripcion: "Herramienta web para desencriptar imágenes de forma rápida.",
-    url: "https://hat.vercel.app/",
-    icono: "fas fa-key"
-  }
-];
