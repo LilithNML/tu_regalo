@@ -606,7 +606,7 @@
                     container.appendChild(createInput('Audio', 'f-audio', UTILS.extractFilename(data.audio), 'audio.mp3'));
                 }
                 else if (type === 'video') {
-                    container.appendChild(createInput('Mensaje', 'f-texto', data.texto, 'Mensaje corto'));
+                    container.appendChild(createInput('Mensaje (Opcional)', 'f-texto', data.texto, 'Mensaje corto'));
                     container.appendChild(createInput('YouTube Link', 'f-video', data.videoEmbed, 'https://youtu.be/...', 'Convertimos el link automáticamente.'));
                 }
                 else if (type === 'internal') {
