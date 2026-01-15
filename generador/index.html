@@ -373,10 +373,10 @@
                     if (!data.imagen || !data.audio) return { valid: false, msg: "Se requiere tanto imagen como audio." };
                 }
                 else if (t === 'video') {
-                    if (!data.videoEmbed) return { valid: false, msg: "No pudimos reconocer este enlace como un video válido de YouTube." };
+                    if (!data.videoEmbed) return { valid: false, msg: "No pude reconocer este enlace como un video válido de YouTube." };
                 }
                 else if (t === 'internal') {
-                    if (!data.archivo) return { valid: false, msg: "Debes especificar la ruta del archivo interno." };
+                    if (!data.archivo) return { valid: false, msg: "Debes especificar la ruta del iframe." };
                 }
                 else if (t === 'link') {
                     if (!data.link) return { valid: false, msg: "Debes ingresar una URL válida." };
@@ -610,7 +610,7 @@
                     container.appendChild(createInput('YouTube Link', 'f-video', data.videoEmbed, 'https://youtu.be/...', 'Convertimos el link automáticamente.'));
                 }
                 else if (type === 'internal') {
-                    container.appendChild(createInput('Ruta Archivo', 'f-archivo', data.archivo, 'folder/index.html'));
+                    container.appendChild(createInput('Ruta Iframe , 'f-archivo', data.archivo, 'https://...'));
                 }
                 else if (type === 'link') {
                     container.appendChild(createInput('Enlace', 'f-link', data.link, 'https://...'));
