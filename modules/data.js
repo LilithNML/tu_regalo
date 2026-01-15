@@ -32,7 +32,7 @@ export const mensajes = {
   },
   "yondu": {
     type: "internal",
-    archivo: "https://anilist.co/home",
+    archivo: "https://lilithnml.github.io/te_amo/contador",
     categoria: "Hay",
     pista: "Yi67"
   },
