@@ -55,8 +55,8 @@
     <div id="screen-home" class="flex-1 flex flex-col items-center justify-center p-6 fade-in">
         <div class="max-w-md w-full text-center space-y-8">
             <div class="space-y-2">
-                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Bienvenida</h2>
-                <p class="text-gray-500 dark:text-gray-400">Todo listo para organizar tus memorias.</p>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Bienvenido</h2>
+                <p class="text-gray-500 dark:text-gray-400">Todo listo para crear tus códigos.</p>
             </div>
             
             <div class="grid gap-4">
@@ -134,7 +134,7 @@
                     <!-- NOMBRE -->
                     <div class="space-y-4">
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300">Nombre del recuerdo</label>
-                        <input type="text" id="input-rawName" placeholder="Ej: Atardecer en la playa" 
+                        <input type="text" id="input-rawName" placeholder="Ej: Isla Corazón" 
                                class="w-full text-xl font-medium border-b-2 border-gray-200 dark:border-gray-600 focus:border-violet-500 bg-transparent py-2 px-1 transition-colors placeholder-gray-300 dark:placeholder-gray-600 text-gray-900 dark:text-white"
                                autocomplete="off"
                                oninput="APP.syncStaticField('rawName', this.value)">
@@ -153,14 +153,14 @@
                             <div class="relative">
                                 <select id="input-type" onchange="APP.attemptTypeChange(this.value)" 
                                         class="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-3 px-4 rounded-lg appearance-none cursor-pointer hover:border-violet-400 transition-colors focus:ring-2 focus:ring-violet-100 dark:focus:ring-violet-900 font-medium">
-                                    <option value="text">Texto / Carta</option>
+                                    <option value="text">Carta</option>
                                     <option value="image">Imagen</option>
                                     <option value="audio">Audio</option>
                                     <option value="image_audio">Imagen + Audio</option>
                                     <option value="video">Video YouTube</option>
-                                    <option value="internal">Archivo Interno</option>
+                                    <option value="internal">Iframe</option>
                                     <option value="link">Enlace Web</option>
-                                    <option value="download">Descarga (Secreto)</option>
+                                    <option value="download">Descarga</option>
                                 </select>
                                 <div class="absolute right-4 top-3.5 text-gray-400 pointer-events-none">
                                     <i class="fas fa-chevron-down text-xs"></i>
@@ -170,7 +170,7 @@
 
                         <div class="space-y-2">
                             <label class="block text-sm font-bold text-gray-700 dark:text-gray-300">Categoría</label>
-                            <input type="text" id="input-categoria" placeholder="Ej: Viajes, Amor, Cosplay" 
+                            <input type="text" id="input-categoria" placeholder="Ej: Carta, Regalo, Dedicatoria" 
                                    class="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-3 px-4 rounded-lg focus:border-violet-500 focus:ring-2 focus:ring-violet-100 dark:focus:ring-violet-900 transition-all placeholder-gray-400 dark:placeholder-gray-500"
                                    oninput="APP.syncStaticField('categoria', this.value)">
                         </div>
