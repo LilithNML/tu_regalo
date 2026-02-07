@@ -526,9 +526,15 @@ input:focus, textarea:focus, select:focus {
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 .icon-svg {
-  display: inline-block;
-  height: 1.25rem;
-  width: 1.25rem;
+    width: 1.25rem; /* Equivalente a w-5 */
+    height: 1.25rem; /* Equivalente a h-5 */
+    fill: none; 
+    stroke: currentColor; /* Esto es lo que da color a iconos actuales */
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: inline-block;
+    vertical-align: middle;
 }
 .pointer-events-none {
   pointer-events: none;
