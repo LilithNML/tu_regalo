@@ -1551,51 +1551,53 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
-/* Corrección Agresiva para Chrome Android */
+/* PATCH: evitar que #editor-form-container tape la cabecera en Chrome/Chromium */
 @media (max-width: 768px) {
-    
-    /* 1. Bloqueamos el scroll del fondo, pero no lo fijamos para evitar conflictos */
-    body {
-        overflow: hidden !important;
-    }
+  /* dejar visible la cabecera (altura ~4rem). Ajusta si tu header es otra altura) */
+  :root { --header-h: 4rem; }
 
-    /* 2. El contenedor se convierte en una capa fija flotante */
-    #editor-form-container {
-        position: fixed !important;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        /* TRUCO CLAVE: -webkit-fill-available es específico para este bug de Chrome */
-        height: 100vh; 
-        height: -webkit-fill-available; 
-        width: 100vw;
-        z-index: 9999; /* Aseguramos que esté encima de todo */
-        display: flex !important;
-        flex-direction: column !important;
-        background: white; /* O el color de fondo de tu tema */
-    }
+  body {
+    /* no bloquees todo el scroll si no es estrictamente necesario */
+    overflow: hidden !important;
+  }
 
-    /* 3. Área de contenido: El secreto es min-height: 0 */
-    #editor-form-container > div.flex-1 {
-        flex: 1 1 auto !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch;
-        /* ESTO ES LO QUE FALTABA: */
-        min-height: 0 !important; 
-        /* Sin min-height:0, flexbox no deja encoger el contenido y empuja los botones */
-    }
+  #editor-form-container {
+    position: fixed !important;
+    top: var(--header-h);       /* <-- importante: deja libre la cabecera */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: calc(100vh - var(--header-h));
+    height: calc(-webkit-fill-available - var(--header-h));
+    width: 100vw;
+    z-index: 1000;              /* <-- mantener por debajo de la cabecera */
+    display: flex !important;
+    flex-direction: column !important;
+    background: white;
+  }
 
-    /* 4. Botones: Ya no usamos sticky, usamos el flujo natural del flex */
-    #editor-form-container > div.sticky.bottom-0 {
-        position: relative !important; /* Quitamos sticky */
-        flex: 0 0 auto !important; /* No permitimos que se encoja ni crezca */
-        width: 100%;
-        background: white; 
-        z-index: 10000;
-        border-top: 1px solid #e5e7eb;
-        /* Padding extra para asegurar que se vea encima de la barra de navegación de Android */
-        padding-bottom: 20px; 
-        padding-bottom: calc(15px + env(safe-area-inset-bottom));
-    }
+  /* área de contenido */
+  #editor-form-container > div.flex-1 {
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0 !important;
+  }
+
+  /* footer / botones del editor (no sticky encima) */
+  #editor-form-container > div.sticky.bottom-0 {
+    position: relative !important;
+    flex: 0 0 auto !important;
+    width: 100%;
+    z-index: 1001;
+    padding-bottom: calc(15px + env(safe-area-inset-bottom));
+    border-top: 1px solid #e5e7eb;
+  }
+
+  /* si quieres, refuerza la cabecera para que siempre esté por encima */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 2000; /* más alto que 1000 */
+  }
 }
