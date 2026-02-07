@@ -1592,8 +1592,8 @@ input:focus, textarea:focus, select:focus {
     }
 
     /* 4. Botones: Usamos posición relativa dentro del flujo flex */
-    #editor-form-container > div.sticky,
-    #editor-form-container > .sticky {
+    #editor-form-container > div.sticky.bottom-0,
+    #editor-form-container > .sticky.bottom-0 {
         position: relative !important;
         flex: 0 0 auto !important;
         flex-shrink: 0 !important;
@@ -1606,16 +1606,15 @@ input:focus, textarea:focus, select:focus {
     }
 
     /* Tema oscuro para botones */
-    .dark #editor-form-container > div.sticky,
-    .dark #editor-form-container > .sticky {
+    .dark #editor-form-container > div.sticky.bottom-0,
+    .dark #editor-form-container > .sticky.bottom-0 {
         background: rgb(31 41 55);
         border-top-color: rgb(55 65 81);
     }
 
-    /* Asegurar que el header también sea parte del flujo */
+    /* Asegurar que el header también sea parte del flujo pero mantenga su sticky */
     #editor-form-container > div.h-14 {
         flex: 0 0 auto !important;
         flex-shrink: 0 !important;
-        position: relative !important;
     }
 }
