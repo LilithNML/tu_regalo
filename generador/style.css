@@ -1551,53 +1551,71 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
-/* PATCH: evitar que #editor-form-container tape la cabecera en Chrome/Chromium */
+/* Corrección Agresiva para Chrome Android y otros navegadores móviles */
 @media (max-width: 768px) {
-  /* dejar visible la cabecera (altura ~4rem). Ajusta si tu header es otra altura) */
-  :root { --header-h: 4rem; }
+    
+    /* 1. Bloqueamos el scroll del fondo */
+    body.editor-active {
+        overflow: hidden !important;
+    }
 
-  body {
-    /* no bloquees todo el scroll si no es estrictamente necesario */
-    overflow: hidden !important;
-  }
+    /* 2. El contenedor se convierte en una capa fija flotante */
+    #editor-form-container {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        /* Altura dinámica compatible con todos los navegadores */
+        height: 100vh; 
+        height: -webkit-fill-available; 
+        width: 100vw;
+        z-index: 9999;
+        display: flex !important;
+        flex-direction: column !important;
+        background: white;
+    }
 
-  #editor-form-container {
-    position: fixed !important;
-    top: var(--header-h);       /* <-- importante: deja libre la cabecera */
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: calc(100vh - var(--header-h));
-    height: calc(-webkit-fill-available - var(--header-h));
-    width: 100vw;
-    z-index: 1000;              /* <-- mantener por debajo de la cabecera */
-    display: flex !important;
-    flex-direction: column !important;
-    background: white;
-  }
+    /* Tema oscuro */
+    .dark #editor-form-container {
+        background: rgb(31 41 55);
+    }
 
-  /* área de contenido */
-  #editor-form-container > div.flex-1 {
-    flex: 1 1 auto !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    min-height: 0 !important;
-  }
+    /* 3. Área de contenido: min-height: 0 es crítico para flexbox */
+    #editor-form-container > div.flex-1 {
+        flex: 1 1 0% !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        min-height: 0 !important;
+        max-height: 100% !important;
+    }
 
-  /* footer / botones del editor (no sticky encima) */
-  #editor-form-container > div.sticky.bottom-0 {
-    position: relative !important;
-    flex: 0 0 auto !important;
-    width: 100%;
-    z-index: 1001;
-    padding-bottom: calc(15px + env(safe-area-inset-bottom));
-    border-top: 1px solid #e5e7eb;
-  }
+    /* 4. Botones: Usamos posición relativa dentro del flujo flex */
+    #editor-form-container > div.sticky,
+    #editor-form-container > .sticky {
+        position: relative !important;
+        flex: 0 0 auto !important;
+        flex-shrink: 0 !important;
+        width: 100%;
+        background: white;
+        z-index: 10000;
+        border-top: 1px solid #e5e7eb;
+        padding-bottom: 20px; 
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    }
 
-  /* si quieres, refuerza la cabecera para que siempre esté por encima */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 2000; /* más alto que 1000 */
-  }
+    /* Tema oscuro para botones */
+    .dark #editor-form-container > div.sticky,
+    .dark #editor-form-container > .sticky {
+        background: rgb(31 41 55);
+        border-top-color: rgb(55 65 81);
+    }
+
+    /* Asegurar que el header también sea parte del flujo */
+    #editor-form-container > div.h-14 {
+        flex: 0 0 auto !important;
+        flex-shrink: 0 !important;
+        position: relative !important;
+    }
 }
