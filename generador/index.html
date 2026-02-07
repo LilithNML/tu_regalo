@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Recuerdos - Optimizado</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        @keyframes pulseShort {
-            0% { opacity: 0.9; }
-            50% { opacity: 1; }
-            100% { opacity: 0.9; }
-        }
-        .animate-pulse-short { animation: pulseShort 1.2s infinite; }
+    
+    <link rel="stylesheet" href="style.css">
 
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+<script>
+    (function() {
+        const theme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
-        
-        .modal-overlay { background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px); }
-        
-        /* Utilidad para iconos SVG */
-        .icon-svg { width: 1em; height: 1em; fill: currentColor; display: inline-block; vertical-align: middle; }
-    </style>
+    })();
+</script>
+
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col md:h-screen md:overflow-hidden transition-colors duration-200">
 
