@@ -1550,3 +1550,28 @@ input:focus, textarea:focus, select:focus {
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   }
 }
+
+/* --- Corrección para visualización en Chrome Android --- */
+@media (max-width: 768px) {
+    body {
+        /* Usamos 100dvh para que se ajuste dinámicamente si aparece/desaparece la barra de búsqueda */
+        /* Añadimos !important para asegurar que sobrescriba las clases de Tailwind del HTML */
+        height: 100dvh !important; 
+        min-height: 100dvh !important;
+        overflow: hidden !important;
+        position: fixed; /* Evita que el "rebote" del scroll de Chrome oculte cosas */
+        width: 100%;
+    }
+    
+    #screen-editor {
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Aseguramos que el contenedor del formulario ocupe el espacio disponible */
+    #editor-form-container {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+}
