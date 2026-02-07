@@ -607,6 +607,7 @@
                 this.els.formContainer.classList.add('hidden');
                 this.els.editorEmpty.classList.remove('hidden');
                 this.els.breadcrumb.textContent = "";
+                document.body.classList.remove('editor-active');
             },
 
             loadForm(data) {
@@ -614,6 +615,7 @@
                 this.els.formContainer.classList.remove('hidden');
                 this.els.formContainer.classList.add('flex');
                 this.els.msgError.style.opacity = '0';
+                document.body.classList.add('editor-active');
 
                 this.els.inputRawName.value = data.rawName || "";
                 this.els.previewId.innerText = UTILS.normalizeId(data.rawName) || "...";
