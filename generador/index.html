@@ -901,16 +901,16 @@
             },
 
             initTheme: () => {
-                const stored = localStorage.getItem('theme');
-                const iconContainer = document.getElementById('theme-icon-container');
-                if (stored === 'light') {
-                    document.documentElement.classList.remove('dark');
-                    iconContainer.innerHTML = ICONS.moon;
-                } else {
-                    document.documentElement.classList.add('dark');
-                    iconContainer.innerHTML = ICONS.sun;
-                }
-            }
+    const stored = localStorage.getItem('theme');
+    const iconContainer = document.getElementById('theme-icon-container');
+    const isDark = document.documentElement.classList.contains('dark');
+    
+    // Solo actualizamos el icono, ya que la clase 'dark' ya la puso el script del head
+    if (iconContainer) {
+        iconContainer.innerHTML = isDark ? ICONS.sun : ICONS.moon;
+    }
+}
+
         };
 
         APP.initTheme();
