@@ -525,17 +525,26 @@ input:focus, textarea:focus, select:focus {
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
+/* Definición robusta del icono */
 .icon-svg {
-    width: 1.25rem; /* Equivalente a w-5 */
-    height: 1.25rem; /* Equivalente a h-5 */
-    fill: none; 
-    stroke: currentColor; /* Esto es lo que da color a iconos actuales */
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor; /* Esto hereda el color de la clase text-XXXX */
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
     display: inline-block;
-    vertical-align: middle;
 }
+
+/* Forzar colores que Tailwind quita en producción si no los ve en el HTML */
+.text-violet-400 { color: #a78bfa !important; }
+.text-amber-400 { color: #fbbf24 !important; }
+.text-blue-400 { color: #60a5fa !important; }
+.text-rose-400 { color: #fb7185 !important; }
+.text-gray-400 { color: #9ca3af !important; }
+.text-gray-500 { color: #6b7280 !important; }
+
 .pointer-events-none {
   pointer-events: none;
 }
