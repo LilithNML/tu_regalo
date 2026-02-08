@@ -4,11 +4,11 @@
  */
 
 import { normalizeText } from './utils.js';
-import { herramientasExternas } from './data.js';
 import { descifrarArchivo } from './webCryptoDecryptor.js';
 
 export class UIManager {
-    constructor() {
+        constructor(herramientas) {
+        this.herramientas = herramientas || [];
         this.elements = {
             input: document.getElementById("codeInput"),
             contentDiv: document.getElementById("contenido"),
@@ -77,7 +77,7 @@ export class UIManager {
     }
 
     initDynamicPlaceholder() {
-        const frases = ["Escribe aquí...", "Una fecha especial...", "¿Nuestro lugar?", "Un apodo...", "Nombre de canción..."];
+        const frases = ["Escribe aquí...", "Una fecha especial...", "¿Nuestro lugar?", "Un apodo...", "Nombre de canción...", "Batman"];
         let index = 0;
         setInterval(() => {
             index = (index + 1) % frases.length;
@@ -99,21 +99,100 @@ export class UIManager {
     }
 
     typeWriterEffect(element, text) {
-        if (this.typewriterTimeout) clearTimeout(this.typewriterTimeout);
-        element.innerHTML = ""; element.classList.add("typewriter-cursor");
-        let i = 0; const slow=60; const fast=30; const accel=50;
-        const type = () => {
-            if (i >= text.length) { element.classList.remove("typewriter-cursor"); return; }
-            const char = text.charAt(i);
-            if (char === '\n') element.appendChild(document.createElement('br'));
-            else element.appendChild(document.createTextNode(char));
-            let speed = i < accel ? slow : fast;
-            if (['.','!','?'].includes(char)) speed += 300;
-            if (char === '\n') speed += 400;
-            i++; this.typewriterTimeout = setTimeout(type, speed);
-        };
-        type();
+    // Limpieza de animación previa
+    if (this.typewriterTimeout) {
+        clearTimeout(this.typewriterTimeout);
+        this.typewriterTimeout = null;
     }
+
+    this.typewriterSkip = false;
+
+    // Protección básica
+    if (!element || !text) return;
+
+    element.innerHTML = "";
+    element.classList.add("typewriter-cursor");
+
+    let i = 0;
+    const textLength = text.length;
+
+    // ---- Velocidad adaptativa ----
+    const slowStart = 65;
+    const minSpeed = 22;
+    const accelRange = Math.min(220, textLength * 0.45);
+
+    // ---- Doble toque real (sin bug móvil) ----
+    let lastTapTime = 0;
+
+    const finishInstantly = () => {
+        if (!element) return;
+
+        // Cancelar futuras ejecuciones
+        this.typewriterSkip = true;
+        if (this.typewriterTimeout) {
+            clearTimeout(this.typewriterTimeout);
+            this.typewriterTimeout = null;
+        }
+
+        // Render completo
+        element.innerHTML = "";
+        text.split('\n').forEach((line, idx) => {
+            if (idx > 0) element.appendChild(document.createElement('br'));
+            element.appendChild(document.createTextNode(line));
+        });
+
+        element.classList.remove("typewriter-cursor");
+        element.removeEventListener("pointerdown", tapHandler);
+    };
+
+    const tapHandler = () => {
+        const now = Date.now();
+        const delta = now - lastTapTime;
+
+        if (delta > 0 && delta < 300) {
+            finishInstantly();
+            lastTapTime = 0;
+            return;
+        }
+
+        lastTapTime = now;
+    };
+
+    // Un solo evento, compatible mouse + touch
+    element.addEventListener("pointerdown", tapHandler);
+
+    const type = () => {
+        // Abortos seguros
+        if (!element || this.typewriterSkip) return;
+
+        if (i >= textLength) {
+            element.classList.remove("typewriter-cursor");
+            element.removeEventListener("pointerdown", tapHandler);
+            return;
+        }
+
+        const char = text.charAt(i);
+
+        if (char === '\n') {
+            element.appendChild(document.createElement('br'));
+        } else {
+            element.appendChild(document.createTextNode(char));
+        }
+
+        // Progresión suave (cartas largas)
+        const progress = Math.min(i / accelRange, 1);
+        let speed = slowStart - (slowStart - minSpeed) * progress;
+
+        // Pausas humanas
+        if (['.', '!', '?'].includes(char)) speed += 280;
+        if (char === '\n') speed += 360;
+
+        i++;
+        this.typewriterTimeout = setTimeout(type, speed);
+    };
+
+    type();
+}
 
     // --- RENDERIZADO ---
     renderContent(data, key) {
@@ -134,7 +213,7 @@ export class UIManager {
             case "text":
                 const pText = document.createElement("p");
                 pText.className = "mensaje-texto";
-                if (data.categoria && ['pensamiento','carta'].includes(data.categoria.toLowerCase())) {
+                if (data.categoria && ['pensamiento'].includes(data.categoria.toLowerCase())) {
                     this.typeWriterEffect(pText, data.texto);
                 } else {
                     pText.textContent = data.texto;
@@ -462,7 +541,7 @@ export class UIManager {
     bindMenuAction(id,fn){const b=document.getElementById(id);if(b)b.addEventListener("click",()=>{fn();this.elements.dropdownMenu.classList.remove("show");});}
     openPanel(p){if(p){p.classList.add("show");p.setAttribute("aria-hidden","false");}}
     closePanel(p){if(p){p.classList.remove("show");p.setAttribute("aria-hidden","true");}}
-    renderTools(){const c=this.elements.toolsListContainer;if(!c)return;c.innerHTML="";herramientasExternas.forEach(t=>{const d=document.createElement("div");d.className="tool-card";d.innerHTML=`<div class="tool-header"><i class="${t.icono}"></i> ${t.nombre}</div><div class="tool-desc">${t.descripcion}</div><a href="${t.url}" target="_blank" class="tool-btn">Abrir <i class="fas fa-external-link-alt"></i></a>`;c.appendChild(d);});}
+    renderTools(){const c=this.elements.toolsListContainer;if(!c)return;c.innerHTML="";this.herramientas.forEach(t=>{const d=document.createElement("div");d.className="tool-card";d.innerHTML=`<div class="tool-header"><i class="${t.icono}"></i> ${t.nombre}</div><div class="tool-desc">${t.descripcion}</div><a href="${t.url}" target="_blank" class="tool-btn">Abrir <i class="fas fa-external-link-alt"></i></a>`;c.appendChild(d);});}
     
     setupListListeners(){
         this.elements.searchUnlocked.addEventListener("input",()=>this.triggerListFilter());
