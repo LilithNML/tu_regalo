@@ -1604,12 +1604,7 @@
             const cleanMsg = { ...msg };
             delete cleanMsg.rawName;    // Don't export rawName
             delete cleanMsg.__invalid;  // Don't export internal draft flag
-            
-            // Escape newlines in texto field
-            if (cleanMsg.texto) {
-                cleanMsg.texto = cleanMsg.texto.replace(/\r\n/g, '\n').replace(/\n/g, '\\n');
-            }
-            
+                       
             exportData.mensajes[id] = cleanMsg;
         }
 
